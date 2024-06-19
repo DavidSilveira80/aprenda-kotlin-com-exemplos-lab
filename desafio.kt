@@ -1,21 +1,47 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
+data class Usuario(val nome: String)
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario
+open class ConteudoEducacional(nomeFormacao: String){
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+    val conteudos : List<String>
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+    init{
+        conteudos = obterConteudos(nomeFormacao)
+    }
+
+
+    private fun obterConteudos(nome:String): List<String>{
+        return when(nome){
+            "Python" -> listOf("PEP8", "Python Fundamentos", "Django")
+            "Java" -> listOf("Java Fundamentos", "Spring Framework")
+            "Kotlin" -> listOf("Kotlin fundamentos", "Kotlin POO", "Android Studio")
+            else -> listOf()
+        }
+    }
+
+}
+
+class Formacao(val nomeFormacao: String): ConteudoEducacional(nomeFormacao){
 
     val inscritos = mutableListOf<Usuario>()
-    
+
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        println("Matriculando Usuário:${usuario.nome}, na Formação: ${nomeFormacao} com os Conteúdos: ${conteudos}")
+        inscritos.add(usuario)
+
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+
+    val user = Usuario("David")
+    val formacao = Formacao("Kotlin")
+    println(formacao.nomeFormacao)
+    formacao.matricular(user)
+
+
+
+
+
+
 }
